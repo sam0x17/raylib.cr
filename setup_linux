@@ -1,0 +1,13 @@
+#!/bin/bash
+echo "downloading raylib 2.0.0 release..."
+mkdir -p /tmp/raylib.cr || exit 1
+rm -rf /tmp/raylib.cr || exit 1
+mkdir -p /tmp/raylib.cr || exit 1
+cd /tmp/raylib.cr || exit 1
+wget https://github.com/raysan5/raylib/releases/download/2.0.0/raylib-2.0.0-Linux-amd64.tar.gz || exit 1
+echo "extracting..."
+tar -xzvf *.tar.gz || exit 1
+rm *.tar.gz || exit 1
+echo "installing to /usr/"
+sudo cp -r raylib*/* /usr/ || exit 1
+echo "done"
