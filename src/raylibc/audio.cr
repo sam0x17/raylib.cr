@@ -21,9 +21,9 @@ lib RayLibC
   fun audio_device_ready? = IsAudioDeviceReady : Bool
   fun set_master_volume = SetMasterVolume(volume : LibC::Float)
   fun load_wave = LoadWave(file_name : LibC::Char*) : Wave
-  fun load_wave = LoadWaveEx(data : Void*, sample_count : LibC::Int, sample_rate : LibC::Int, sample_size : LibC::Int, channels : LibC::Int) : Wave
+  fun load_wave_ex = LoadWaveEx(data : Void*, sample_count : LibC::Int, sample_rate : LibC::Int, sample_size : LibC::Int, channels : LibC::Int) : Wave
   fun load_sound = LoadSound(file_name : LibC::Char*) : Sound
-  fun load_sound = LoadSoundFromWave(wave : Wave) : Sound
+  fun load_sound_from_wave = LoadSoundFromWave(wave : Wave) : Sound
   fun update_sound = UpdateSound(sound : Sound, data : Void*, samples_count : LibC::Int)
   fun unload_wave = UnloadWave(wave : Wave)
   fun unload_sound = UnloadSound(sound : Sound)
