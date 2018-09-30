@@ -1,6 +1,7 @@
-# TODO: Write documentation for `Raylib`
-module Raylib
-  VERSION = "0.1.0"
+require "./raylibc/*"
 
-  # TODO: Put your code here
+module Raylib
 end
+
+RayLibC.init_audio_device
+RayLibC.close_audio_device
