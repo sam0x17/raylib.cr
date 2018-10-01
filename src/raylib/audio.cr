@@ -1,20 +1,76 @@
-class RayLib::Wave
-  @data : RayLibC::Wave
-  @path : String
+class RayLib::Sound
+  getter data : RayLibC::Sound
+  getter volume = 1.0
+  getter pitch = 1.0
 
   def initialize(path : String)
-    @path = path
-    @data = RayLibC.load_wave(@path.to_unsafe)
+    @data = RayLibC.load_sound(path)
   end
 
-  def initialize(data : Void*, sample_count : Int32, sample_rate : Int32, sample_size : Int32, channels : Int32)
-    @path = ""
+  def initialize(wave : Wave)
+    @data = RayLibC.load_sound_from_wave(wave.data)
+  end
+
+  def initialize(wave : RayLibC::Wave)
+    @data = RayLibC.load_sound_from_wave(wave)
+  end
+
+  def finalize
+    RayLibC.unload_sound(@data)
+  end
+
+  def update(sound : Sound, data : Void*, samples_count : Int)
+    RayLibC.update_sound(@data, data, samples_count)
+  end
+
+  def play
+    RayLibC.play_sound(@data)
+  end
+
+  def pause
+    RayLibC.pause_sound(@data)
+  end
+
+  def stop
+    RayLibC.stop_sound(@data)
+  end
+
+  def resume
+    RayLibC.resume_sound(@data)
+  end
+
+  def playing?
+    RayLibC.sound_playing?(@data)
+  end
+
+  def volume=(volume)
+    @volume = volume
+    RayLibC.set_sound_volume(@data, @volume)
+  end
+
+  def pitch=(pitch)
+    @pitch = pitch
+    RayLibC.set_sound_pitch(@data, @pitch)
+  end
+end
+
+class RayLib::Wave
+  @data : RayLibC::Wave
+
+  def initialize(path : String)
+    @data = RayLibC.load_wave(path.to_unsafe)
+  end
+
+  def initialize(data : Void*, sample_count : Int, sample_rate : Int, sample_size : Int, channels : Int)
     @data = RayLibC.load_wave_ex(data, sample_count, sample_rate, sample_size, channels)
   end
 
   def initialize(wave : RayLibC::Wave)
     @data = wave
-    @path = ""
+  end
+
+  def to_sound
+    Sound.new(@data)
   end
 
   def finalize
